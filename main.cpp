@@ -104,29 +104,20 @@ void dump_memory() {
     CloseHandle(process);
 }
 
-void inject_dll(int argc, char* argv[]) {
+void inject_dll() {
     DWORD pid = 0;
     std::wstring dllPath;
-
-    if (argc == 3) {
-        pid = std::stoul(argv[1]);
-        int len = MultiByteToWideChar(CP_ACP, 0, argv[2], -1, nullptr, 0);
-        wchar_t* widePath = new wchar_t[len];
-        MultiByteToWideChar(CP_ACP, 0, argv[2], -1, widePath, len);
-        dllPath = widePath;
-        delete[] widePath;
-    } else {
-        std::cout << "Enter target PID: ";
-        std::cin >> pid;
-        std::cout << "Enter full DLL path: ";
-        std::string path;
-        std::cin >> path;
-        int len = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, nullptr, 0);
-        wchar_t* widePath = new wchar_t[len];
-        MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, widePath, len);
-        dllPath = widePath;
-        delete[] widePath;
-    }
+    
+    std::cout << "Enter target PID: ";
+    std::cin >> pid;
+    std::cout << "Enter full DLL path: ";
+    std::string path;
+    std::cin >> path;
+    int len = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, nullptr, 0);
+    wchar_t* widePath = new wchar_t[len];
+    MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, widePath, len);
+    dllPath = widePath;
+    delete[] widePath;
 
     HANDLE hProcess = OpenProcess(
         PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ,
@@ -187,7 +178,7 @@ int main()
                 dump_memory();
                 break;
             case 3:
-                //inject_dll();
+                inject_dll();
                 break;
             case 0: break;
         } 
