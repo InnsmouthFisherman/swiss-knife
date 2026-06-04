@@ -167,7 +167,7 @@ int main()
     int option = 1;
 
     while (option) {
-        std::cout << "\n1) List processes \n2) Process memory dump\n3)Inject DLL\n";
+        std::cout << "\n1) List processes \n2) Process memory dump\n3) Inject DLL\n";
         std::cin >> option;
 
         switch (option){
