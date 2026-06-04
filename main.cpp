@@ -110,7 +110,6 @@ void inject_dll(int argc, char* argv[]) {
 
     if (argc == 3) {
         pid = std::stoul(argv[1]);
-        // Преобразуем ANSI путь в wide string
         int len = MultiByteToWideChar(CP_ACP, 0, argv[2], -1, nullptr, 0);
         wchar_t* widePath = new wchar_t[len];
         MultiByteToWideChar(CP_ACP, 0, argv[2], -1, widePath, len);
